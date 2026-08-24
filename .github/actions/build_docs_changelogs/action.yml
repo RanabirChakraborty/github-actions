@@ -125,6 +125,7 @@ runs:
         fi
         echo "::set-output name=PRS::${#PRS[@]}"
         if [[ ${#PRS[@]} > 0 ]]; then
+          mkdir -p changelogs/fragments
           IFS=$'\n' FRAGMENTS=($(hub pr list -s all -f '%sm~%I~%L~%t~%n' --color=never | grep -P "$(echo "^(${PRS[@]})" | tr ' ' '|')"))
           for frag in "${FRAGMENTS[@]}"; do
             PR=$(echo $frag | cut -d~ -f2)
